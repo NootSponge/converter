@@ -1,8 +1,8 @@
 {
-    "name": "3f/converter",
+    "name": "nootsponge/converter",
     "description": "A set of classes to translate a text from HTML to BBcode and from BBCode to Markdown.",
     "keywords": ["bbcode", "markdown", "html", "converter", "translator", "formatter"],
-    "homepage": "https://github.com/dedalozzo/converter",
+    "homepage": "https://github.com/nootsponge/converter",
     "type": "library",
     "license": "Apache-2.0",
     "authors": [
@@ -10,6 +10,11 @@
             "name": "Filippo Fadda",
             "email": "filippo.fadda@gmail.com",
             "homepage": "http://www.linkedin.com/in/filippofadda"
+        },
+        {
+            "name": "Andrew",
+            "email": "andrew@nootsponge.com",
+            "homepage": "https://www.nootsponge.com"
         }
     ],
     "require": {
