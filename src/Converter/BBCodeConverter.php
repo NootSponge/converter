@@ -97,7 +97,7 @@ class BBCodeConverter extends Converter
         $this->text = preg_replace_callback('%\[b\]([\W\D\w\s]*?)\[/b\]%iu',
             
             function ($matches) {
-                return "**" . trim($matches[1], " ") . "**";
+                return "**" . trim($matches[1], " ") . "**" . PHP_EOL;
             },
             
             $this->text
@@ -335,6 +335,29 @@ class BBCodeConverter extends Converter
         
     }
     
+    public function replaceMedia() {
+        $this->text = preg_replace_callback('%\[media=(giphy|imgur|pintrest|reddit|soundcloud|spotify|twitch|twitter|vimeo|youtube)\s*\]\s*("(?:[^"]*")|\A[^\']*\Z|(?:[^\'">\]\s]+))\s*(?:[^]\s]*)\[/media\]%iu',
+            
+            function ($matches) {
+                if ( isset($matches[1]) ) {
+                    switch ($matches[1]) {
+                        case 'youtube':
+                            return PHP_EOL . "![YouTube Video]" . "(https://youtu.be/" . $matches[2] . ")" . PHP_EOL;
+                        case 'imgur':
+                            return PHP_EOL . "![Imgur Link]" . "(https://imgur.com/" . $matches[2] . ")" . PHP_EOL;
+                        default:
+                            return '';
+                    }
+                } else {
+                    throw new \RuntimeException(sprintf("Text identified by '%d' have malformed BBCode images", $this->id));
+                }
+                
+            },
+            
+            $this->text
+        );
+    }
+    
     
     /**
      * @brief Converts the provided BBCode text to an equivalent Markdown text.
@@ -355,6 +378,7 @@ class BBCodeConverter extends Converter
         $this->replaceImages();
         $this->replaceQuotes();
         $this->replaceSnippets();
+        $this->replaceMedia();
         
         return trim($this->text);
     }
